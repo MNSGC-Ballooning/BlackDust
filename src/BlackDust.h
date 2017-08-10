@@ -6,11 +6,11 @@
 class dSen{
 	public:
 		dSen();
-		dSen(uint8_t LOW, uint8_t HIGH);
+		dSen(uint8_t Low , uint8_t High );
 		void setPins(uint8_t * PINS);
 		uint8_t* getPins();
 	private:
 		uint8_t low;
 		uint8_t high;
-}:
+};
 #endif	

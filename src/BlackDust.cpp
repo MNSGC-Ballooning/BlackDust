@@ -5,9 +5,9 @@ dSen::dSen(){
 	low = 0;
 	high = 0;
 }
-dSen::dSen(uint8_t LOW, uint8_t HIGH){
-	low = LOW;
-	high = HIGH;
+dSen::dSen(uint8_t Low, uint8_t High){
+	low = Low;
+	high = High;
 }
 
 void dSen::setPins(uint8_t * PINS){
