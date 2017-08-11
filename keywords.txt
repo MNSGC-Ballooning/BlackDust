@@ -1,3 +1,5 @@
 dSen	KEYWORD1
 setPins	KEYWORD2
 getPins	KEYWORD2
+getHigh KEYWORD2
+getLow	KEYWORD2

@@ -18,3 +18,9 @@ uint8_t* dSen::getPins(){
 	uint8_t gary[2] = {low,high};
 	return gary;
 }
+uint8_t dSen::getLow(){
+	return low;
+}
+uint8_t dSen::getHigh(){
+	return high;
+}
