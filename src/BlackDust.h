@@ -32,4 +32,15 @@ class dSen{
 		uint8_t pulseCount;
 		
 };
+class Pin{
+	public:
+		Pin(uint8_t spot);
+		bool getState();
+		bool getPrev();
+		uint8_t getPin();
+		void setState(byte status);
+	private:
+		uint8_t number;
+		bool changed;
+	
 #endif	
