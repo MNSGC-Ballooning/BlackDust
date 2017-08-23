@@ -11,8 +11,14 @@ class dSen{
 		uint8_t* getPins();
 		uint8_t getLow();
 		uint8_t getHigh();
+		bool getHighState();
+		bool getLowState();
+		void setHighState();
+		void setLowState();
 	private:
 		uint8_t low;
 		uint8_t high;
+		bool lowState;
+		bool highState;
 };
 #endif	

@@ -24,3 +24,11 @@ uint8_t dSen::getLow(){
 uint8_t dSen::getHigh(){
 	return high;
 }
+bool dSen::getHighState(){
+	return highState;
+}
+bool dSen::getLowState(){
+	return lowState;
+}
+//void dSen::setHighState(byte status
+
