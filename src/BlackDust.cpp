@@ -4,6 +4,16 @@
 dSen::dSen(){
 	low = 0;
 	high = 0;
+	lowState = true;
+	highState = true;
+	prevHigh = true;
+	prevLow = true;
+	maxDuration = 0;
+	minDuration = 0;
+	pulseCount = 0;
+	changed = false;
+	lowTimer = 0;
+	highTimer = 0;
 }
 dSen::dSen(uint8_t Low, uint8_t High){
 	low = Low;
@@ -30,5 +40,19 @@ bool dSen::getHighState(){
 bool dSen::getLowState(){
 	return lowState;
 }
-//void dSen::setHighState(byte status
+void dSen::setHighState(byte status){
+	prevHigh = highState;
+	highState = status;
+}
+void dSen::setLowState(byte status){
+	prevLow = lowState;
+	lowState = status;
+}
+bool dSen::getPrevHigh(){
+	return prevHigh;
+}
+bool dSen::getPrevLow(){
+	return prevLow;
+}
+
 

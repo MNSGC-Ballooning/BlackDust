@@ -13,12 +13,23 @@ class dSen{
 		uint8_t getHigh();
 		bool getHighState();
 		bool getLowState();
-		void setHighState();
-		void setLowState();
+		bool getPrevHigh();
+		bool getPrevLow();
+		void setHighState(byte status);
+		void setLowState(byte status);
+		bool changed;
+		unsigned long lowTimer;
+		unsigned long highTimer;
 	private:
 		uint8_t low;
 		uint8_t high;
+		bool prevLow;
+		bool prevHigh;
 		bool lowState;
 		bool highState;
+		unsigned long maxDuration;
+		unsigned long minDuration;
+		uint8_t pulseCount;
+		
 };
 #endif	
