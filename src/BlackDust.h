@@ -11,7 +11,9 @@ class Pin{
 		uint8_t getPin();
 		void setState(byte status);
 		void update();
+		String reset();
 	private:
+		bool first;
 		byte state;
 		byte prevState;
 		uint8_t number;
@@ -21,7 +23,9 @@ class Pin{
 		unsigned long duration;
 		unsigned long minDuration;
 		unsigned long maxDuration;
+		unsigned long LPO;
 		uint8_t pulses;
+		
 };
 class dSen{
 	public:
@@ -33,6 +37,7 @@ class dSen{
 		void checkStatus();
 		uint8_t getLow();
 		uint8_t getHigh();
+		String  reset();
 	private:
 		Pin low;
 		Pin high;

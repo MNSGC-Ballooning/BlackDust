@@ -8,11 +8,13 @@ Pin::Pin(uint8_t spot){
 	prevState= false;
 	rising=false;
 	falling = false;
+	first = true;
 	timer =0;
 	duration= 0;
-	minDuration=0;
+	minDuration=100000;
 	maxDuration=0; 
 	pulses = 0;
+	LPO = 0;
 }
 bool Pin::getState(){
 	return state;
@@ -36,11 +38,11 @@ void Pin::setState(byte status){   //0 is Low, 1 is High
 	}
 }
 void Pin::update(){
-	if(rising){
-		Serial.println("rising!");
-		if(millis()-timer>1000){
+	if(rising&&!first){
+		Serial.println("rising");
 		pulses++;
 		duration = millis()-timer;
+		LPO+=duration;
 		Serial.println(String(duration));
 		if(duration>maxDuration){
 			maxDuration = duration;
@@ -48,20 +50,47 @@ void Pin::update(){
 		if(duration<minDuration){
 			minDuration = duration;
 		}
-		}
 		rising = false;
 		duration = 0;
 	}
 	if(falling){
 		Serial.println("falling");
-		timer = millis();
 		falling = false;
+		timer = millis();
+		first = false;
+	}
+	if(rising&&first){
+		Serial.println("checking first rise");
+		first = false;
+		rising = false;
 	}
 }
+String Pin::reset(){
+	String toPrint = "";
+	toPrint += String(pulses);
+	toPrint += ",";
+	toPrint += String(LPO/float(30000));      //counting on a 30 second sample time
+	toPrint += ",";
+	if(pulses!=0){
+		toPrint += String(LPO/pulses);     //average pulse length
+	}
+	else{
+		toPrint+= "0";
+	}
+	toPrint += ",";
+	toPrint += String(minDuration);
+	toPrint += ",";
+	toPrint += String(maxDuration);
+	timer =millis();
+	duration= 0;
+	minDuration=100000;
+	maxDuration=0; 
+	pulses = 0;
+	LPO = 0;
+	first = true;
+	return toPrint;
 	
-		
-		
-		
+}
 dSen::dSen(uint8_t Low, uint8_t High){
 	low = Pin(Low);
 	high = Pin(High);
@@ -89,6 +118,14 @@ uint8_t dSen::getHigh(){
 uint8_t dSen::getLow(){
 	return low.getPin();
 }
+String dSen::reset(){
+	String toSend = "";
+	toSend +=low.reset();
+	toSend += "\n";
+	toSend +=high.reset();
+	return toSend;
+}
+
 	
 	
 
