@@ -12,8 +12,8 @@ class Pin{
 		void setState(byte status);
 		void update();
 	private:
-		bool state;
-		bool prevState;
+		byte state;
+		byte prevState;
 		uint8_t number;
 		bool rising;
 		bool falling;
@@ -31,6 +31,8 @@ class dSen{
 		bool changed;
 		void update();
 		void checkStatus();
+		uint8_t getLow();
+		uint8_t getHigh();
 	private:
 		Pin low;
 		Pin high;

@@ -1,7 +1,6 @@
 #include "BlackDust.h"
 
 Pin::Pin(){
-	number = 1;
 }
 Pin::Pin(uint8_t spot){
 	number = spot;
@@ -28,7 +27,7 @@ void Pin::setState(byte status){   //0 is Low, 1 is High
 	prevState = state;
 	state = status;
 	if(state!=prevState){
-		if(state = true){
+		if(state){
 			rising = true;
 		}
 		else{
@@ -38,9 +37,11 @@ void Pin::setState(byte status){   //0 is Low, 1 is High
 }
 void Pin::update(){
 	if(rising){
+		Serial.println("rising!");
 		if(millis()-timer>1000){
 		pulses++;
 		duration = millis()-timer;
+		Serial.println(String(duration));
 		if(duration>maxDuration){
 			maxDuration = duration;
 		}
@@ -52,6 +53,7 @@ void Pin::update(){
 		duration = 0;
 	}
 	if(falling){
+		Serial.println("falling");
 		timer = millis();
 		falling = false;
 	}
@@ -80,6 +82,12 @@ void dSen::checkStatus(){
 void dSen::update(){
 	low.update();
 	high.update();
+}
+uint8_t dSen::getHigh(){
+	return high.getPin();
+}
+uint8_t dSen::getLow(){
+	return low.getPin();
 }
 	
 	
