@@ -1,23 +1,68 @@
 #include "BlackDust.h"
 
-
-dSen::dSen(){
-	low = 0;
-	high = 0;
-	lowState = true;
-	highState = true;
-	prevHigh = true;
-	prevLow = true;
-	maxDuration = 0;
-	minDuration = 0;
-	pulseCount = 0;
-	changed = false;
-	lowTimer = 0;
-	highTimer = 0;
+Pin::Pin(){
+	number = 1;
 }
+Pin::Pin(uint8_t spot){
+	number = spot;
+	state= false;
+	prevState= false;
+	rising=false;
+	falling = false;
+	timer =0;
+	duration= 0;
+	minDuration=0;
+	maxDuration=0; 
+	pulses = 0;
+}
+bool Pin::getState(){
+	return state;
+}
+bool Pin::getPrev(){
+	return prevState;
+}
+uint8_t Pin::getPin(){
+	return number;
+}
+void Pin::setState(byte status){   //0 is Low, 1 is High
+	prevState = state;
+	state = status;
+	if(state!=prevState){
+		if(state = true){
+			rising = true;
+		}
+		else{
+			falling = true;
+		}
+	}
+}
+void Pin::update(){
+	if(rising){
+		if(millis()-timer>1000){
+		pulses++;
+		duration = millis()-timer;
+		if(duration>maxDuration){
+			maxDuration = duration;
+		}
+		if(duration<minDuration){
+			minDuration = duration;
+		}
+		}
+		rising = false;
+		duration = 0;
+	}
+	if(falling){
+		timer = millis();
+		falling = false;
+	}
+}
+	
+		
+		
+		
 dSen::dSen(uint8_t Low, uint8_t High){
-	low = Low;
-	high = High;
+	low = Pin(Low);
+	high = Pin(High);
 }
 
 void dSen::setPins(uint8_t * PINS){
@@ -25,34 +70,18 @@ void dSen::setPins(uint8_t * PINS){
 	high = PINS[1];
 }
 uint8_t* dSen::getPins(){
-	uint8_t gary[2] = {low,high};
+	uint8_t gary[2] = {low.getPin(),high.getPin()};
 	return gary;
 }
-uint8_t dSen::getLow(){
-	return low;
+void dSen::checkStatus(){
+	low.setState(digitalRead(low.getPin()));
+	high.setState(digitalRead(high.getPin()));
 }
-uint8_t dSen::getHigh(){
-	return high;
+void dSen::update(){
+	low.update();
+	high.update();
 }
-bool dSen::getHighState(){
-	return highState;
-}
-bool dSen::getLowState(){
-	return lowState;
-}
-void dSen::setHighState(byte status){
-	prevHigh = highState;
-	highState = status;
-}
-void dSen::setLowState(byte status){
-	prevLow = lowState;
-	lowState = status;
-}
-bool dSen::getPrevHigh(){
-	return prevHigh;
-}
-bool dSen::getPrevLow(){
-	return prevLow;
-}
+	
+	
 
 
