@@ -37,7 +37,7 @@ class dSen{
 		void checkStatus();
 		uint8_t getLow();
 		uint8_t getHigh();
-		String  reset();
+		String  reset(uint8_t sensor);
 	private:
 		Pin low;
 		Pin high;
