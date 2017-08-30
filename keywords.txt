@@ -3,3 +3,5 @@ setPins	KEYWORD2
 getPins	KEYWORD2
 getHigh KEYWORD2
 getLow	KEYWORD2
+reset 	KEYWORD2
+checkStatus	KEYWORD2
