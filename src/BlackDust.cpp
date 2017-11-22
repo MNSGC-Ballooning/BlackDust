@@ -78,7 +78,12 @@ String Pin::reset(){
 		toPrint+= "0";
 	}
 	toPrint += ",";
-	toPrint += String(minDuration);
+	if(minDuration == 100000){
+		toPrint+= "0";
+	}
+	else{
+		toPrint += String(minDuration);
+	}
 	toPrint += ",";
 	toPrint += String(maxDuration);
 	timer =millis();
