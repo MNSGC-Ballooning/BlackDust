@@ -124,9 +124,9 @@ uint8_t dSen::getLow(){
 	return low.getPin();
 }
 String dSen::reset(uint8_t sensor){
-	String toSend = String(sensor) + ",low,";
+	String toSend = String(sensor) + "," + "low,";
 	toSend +=low.reset();
-	toSend += "\n" +String(sensor) + ",high,";
+	toSend += "\n" +String(sensor) + "," + "high,";
 	toSend +=high.reset();
 	return toSend;
 }
